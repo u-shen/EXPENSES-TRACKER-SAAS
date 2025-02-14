@@ -4,10 +4,10 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { revalidatePath } from "next/cache";
 
 //Add Expense
-export async function addExpenses(formData: FormData) {
+export async function addExpenses(formData: FormData): Promise<void> {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  if (formData.get("description") === "") return null;
+  if (formData.get("description") === "") return;
   await prisma.expense.create({
     data: {
       amount: Number(formData.get("amount")) as number,

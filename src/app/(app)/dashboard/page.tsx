@@ -14,7 +14,7 @@ export default async function Dasboard() {
   const expenses = await prisma.expense.findMany({
     where: {
       author: {
-        email: user.email,
+        email: user.email as string,
       },
     },
   });
