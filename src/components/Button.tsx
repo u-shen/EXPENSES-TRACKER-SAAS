@@ -1,6 +1,6 @@
 "use client";
 import { deleteExpenses } from "@/actions/expenses";
-export default function Button({ id }: { id: number }) {
+export default function Button({ id }: { id: string }) {
   return (
     <button
       onClick={() => deleteExpenses(id)}

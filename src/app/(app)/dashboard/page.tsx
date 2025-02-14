@@ -1,27 +1,41 @@
 import Button from "@/components/Button";
 import Form from "@/components/form";
 import { prisma } from "@/lib/prisma";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function Dasboard() {
-  const expenses = await prisma.expense.findMany();
-  const expenseCount = await prisma.expense.count();
-  console.log(expenseCount);
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const user = await getUser();
+  const auth = await isAuthenticated();
+  if (!auth) {
+    redirect("/");
+  }
+  const expenses = await prisma.expense.findMany({
+    where: {
+      author: {
+        email: user.email,
+      },
+    },
+  });
   return (
-    <div className="dashboard">
-      <h2 className="text-4xl text-center uppercase">Dashboard</h2>
-      {expenseCount == 0 ? (
+    <div className="dashboard max-w-[761px] mx-auto max-sm:mx-4 text-white/50">
+      <h2 className="text-4xl max-md:text-xl text-black shadow-inner shadow-teal-800 rounded-md p-4 text-center bg-[#2C9676]">
+        Expense Tracker
+      </h2>
+      {expenses.length == 0 ? (
         <Form />
       ) : (
-        <ul className="my-4 space-y-3">
-          <li className=" rounded-md shadow-md bg-white p-4 flex flex-col">
+        <ul className="items-start my-4 space-y-3">
+          <li className="flex-1 rounded-md shadow border-2 sm:border-4 shadow-black bg-white p-1 flex flex-col max-md:text-sm">
             {expenses.map((item) => {
               return (
                 <div
                   key={item.id}
-                  className="list-border flex items-center gap-2  p-2"
+                  className="list-border text-black flex items-center gap-2 p-2"
                 >
                   <div>{item.description}</div>
-                  <div className="ml-auto font-bold">{`${item.amount}$`}</div>
+                  <div className="ml-auto font-bold">{`$${item.amount}`}</div>
                   <Button id={item.id} />
                 </div>
               );

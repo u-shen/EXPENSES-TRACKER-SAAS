@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Background />
       <Header />
-      <div className="my-10 relative container mx-auto">{children}</div>
+      <div className="my-32 relative container mx-auto">{children}</div>
     </>
   );
 }

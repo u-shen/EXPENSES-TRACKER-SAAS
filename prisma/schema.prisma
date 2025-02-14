@@ -10,8 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expenses Expense[] 
+  }
+
 model Expense {
-  id          String @id @default(uuid())
+  id          String @id @default(cuid())
   description String
-  amount      BigInt
+  amount      Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author User @relation(fields:[authorId],references:[id])
+  authorId  String
 }

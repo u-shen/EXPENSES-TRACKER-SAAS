@@ -4,6 +4,6 @@
 
 @layer utilities {
   .list-border:not(:last-child) {
-    @apply border-b;
+    @apply border-b border-b-2;
   }
 }
