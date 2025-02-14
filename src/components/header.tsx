@@ -1,9 +1,10 @@
 "use client";
 
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import logo from "../../public/teal-logo.png";
+import Image from "next/image";
 export default function Header() {
   const Links = [
     {
@@ -17,9 +18,11 @@ export default function Header() {
   ];
   const pathname = usePathname();
   return (
-    <header className="p-4 max-md:p-2 flex justify-between border-b border-white/30">
+    <header className="container mx-auto p-4 max-md:p-2 flex justify-between border-b-2 border-white/30">
       <Link href="/dashboard">
-        <div className="logo"></div>
+        <div className="logo">
+          <Image width={30} src={logo} alt="logo" />
+        </div>
       </Link>
       <div className="navigation-link">
         <ul className="flex gap-2 text-white">
