@@ -9,7 +9,7 @@ export default async function Dasboard() {
   const user = await getUser();
   const auth = await isAuthenticated();
   if (!auth) {
-    redirect("/");
+    redirect("/api/auth/login");
   }
   const expenses = await prisma.expense.findMany({
     where: {
@@ -20,8 +20,8 @@ export default async function Dasboard() {
   });
   return (
     <div className="dashboard max-w-[761px] mx-auto max-sm:mx-4 text-white/50">
-      <h2 className="text-4xl max-md:text-xl text-black shadow-inner shadow-teal-800 rounded-md p-4 text-center bg-[#2C9676]">
-        Expense Tracker
+      <h2 className="text-4xl text-white max-md:text-xl rounded-md p-4 text-center">
+        Dashboard
       </h2>
       {expenses.length == 0 ? (
         <Form />

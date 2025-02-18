@@ -4,8 +4,12 @@ import {
   RegisterLink,
   LoginLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import PurchesBtn from "@/components/PurchesBtn";
 
-export default function Home() {
+export default async function Home() {
+  const { isAuthenticated } = getKindeServerSession();
+  const isAuth = await isAuthenticated();
   return (
     <>
       <main className="bg-gradient-to-r from-green-400 to-blue-500 min-h-screen flex flex-col xl:flex-row items-center justify-center gap-10">
@@ -29,12 +33,18 @@ export default function Home() {
               lifetime access for $99.
             </p>
             <div className="flex gap-x-4">
-              <LoginLink className="bg-black text-white py-2 px-4 rounded-lg font-medium">
-                Login
-              </LoginLink>
-              <RegisterLink className="bg-black/50 text-white py-2 px-4 rounded-lg font-medium">
-                Register
-              </RegisterLink>
+              {isAuth ? (
+                <PurchesBtn />
+              ) : (
+                <>
+                  <LoginLink className="bg-black text-white py-2 px-4 rounded-lg font-medium">
+                    Login
+                  </LoginLink>
+                  <RegisterLink className="bg-black/50 text-white py-2 px-4 rounded-lg font-medium">
+                    Register
+                  </RegisterLink>
+                </>
+              )}
             </div>
           </div>
         </div>
