@@ -56,8 +56,8 @@ export async function generateStripe() {
       },
     ],
     mode: "subscription",
-    success_url: "http://localhost:3000/dashboard",
-    cancel_url: "http://localhost:3000/",
+    success_url: "https://expenses-tracker-saas.vercel.app/dashboard",
+    cancel_url: "https://expenses-tracker-saas.vercel.app",
   });
   return redirect(session.url!);
 }
